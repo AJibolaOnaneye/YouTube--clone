@@ -6,8 +6,6 @@ import Subscriber from "./Sections/Subscriber";
 
 
 
-
-
 function DetailVideoPage(props) {
   const videoId = props.match.params.videoId;
   const [Video, setVideo] = useState([]);
@@ -27,12 +25,14 @@ function DetailVideoPage(props) {
     });
   }, []);
 
-   
+
+
+    if(Video.writer){
 
     return (
     
       <Row>
-        <Col lg={18} xs={24}>
+        <Col lg={18} xs={24} >
           <div
             className="postPage"
             style={{ width: "100%", padding: "3rem 4em" }}
@@ -42,9 +42,9 @@ function DetailVideoPage(props) {
               src={`http://localhost:5000/${Video.filePath}`}
               controls
             ></video>
-                      /* Video.writer._id */
+                      
               
-            <List.Item actions={[ <Subscriber userTo={ Video.writer._id } userFrom={localStorage.getItem ('userId')} />]}>
+            <List.Item actions={[ <Subscriber userTo={ Video.writer._id} userFrom={localStorage.getItem ('userId')} />]}>
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
                 title={<a href="https://ant.design">{Video.title}</a>}
@@ -61,7 +61,12 @@ function DetailVideoPage(props) {
         </Col>
       </Row>
     );
-
+    } 
+    else {
+      return (
+        <div>Loading...</div>
+      )
+    }
 }
 
 export default DetailVideoPage;

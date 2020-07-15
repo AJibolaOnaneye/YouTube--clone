@@ -91,10 +91,12 @@ router.post("/getVideo", (req, res) => {
     Video.findOne({ "_id" : req.body.videoId })
     .populate('writer')
     .exec((err, video) => {
-        if (err) res.status(400).send(err);
+        if (err) return res.status(400).send(err);
         res.status(200).json({ success:true, video })
     })
 })
+
+
 
 
 
