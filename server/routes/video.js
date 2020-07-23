@@ -3,6 +3,7 @@ const router = express.Router()
 const multer = require('multer')
 const ffmpeg = require('fluent-ffmpeg')
 const { Video } = require('../models/video')
+const {Subscriber} = require('../models/Subscriber')
 
 
 var storage = multer.diskStorage({
@@ -94,6 +95,33 @@ router.post("/getVideo", (req, res) => {
         if (err) return res.status(400).send(err);
         res.status(200).json({ success:true, video })
     })
+})
+
+router.post("/getSubscriptionVideos", (req, res) => {
+    // Need to find all of the users that i am subscribing to from Subscriber collection
+
+    Subscriber.find({ 'userFrom': req.body.userFrom })
+    .exec((err, subscribers)=> {
+        if(err) return res.status(400).send(err)
+
+        let subscribedUser = []
+
+        subscribers.map((subscriber, i) => {
+            subscribedUser.push(subscriber.userTo)
+        })
+
+
+         // Need to Fetch all the videos that belong to the users that i found in previous steps 
+    // $${n => takes care of every person in the subscribeduser compared.. to the normal method that is limited to one..check mongodb documentatiom
+    Video.find({writer: { $in: subscribedUser }  })
+    .populate('writer')
+    .exec((err, videos)=> {
+        if(err) return res.status(400).send(err)
+        res.status(200).json({ success: true, videos })
+    })
+    })
+
+   
 })
 
 

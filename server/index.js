@@ -40,7 +40,10 @@ app.use('/api/users', require('./routes/users'))
 app.use('/api/video', require('./routes/video'))
 // subscribe
 app.use('/api/subscribe', require('./routes/subscribe'))
-
+// Comment
+app.use('/api/comment', require('./routes/comment'))
+// like
+app.use('/api/like', require('./routes/like'))
 // app.use('/api/users', require('./routes/users'));
 
 
