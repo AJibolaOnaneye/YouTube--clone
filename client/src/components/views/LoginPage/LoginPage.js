@@ -60,7 +60,7 @@ function LoginPage(props) {
               setFormErrorMessage('Check out your Account or Password again')
               setTimeout(() => {
                 setFormErrorMessage("")
-              }, 3000);
+              }, 3000 || 3006);
             });
           setSubmitting(false);
         }, 500);
