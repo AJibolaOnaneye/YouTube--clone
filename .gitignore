@@ -3,7 +3,7 @@
 
 dev.js
 
-.env
+/.env
 
 .DS_Store
 
